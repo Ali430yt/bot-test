@@ -4,7 +4,7 @@ from telebot import types
 from user_agent import generate_user_agent
 import logging
 from flask import Flask, request
-
+import time
 
 BOT_TOKEN = "5202635853:AAG19u0hgF3Qc476d5i6lZ9PbMb_OgWUaPc"
 APP_URL = "https://bot-user-insta.herokuapp.com/" + BOT_TOKEN
@@ -91,6 +91,7 @@ def callback(call):
             S = types.InlineKeyboardButton(text ="Stop ⏹️", callback_data="stop"+str(id))
             mas.add(T,F,S)
             bot.edit_message_text(chat_id=call.message.chat.id,message_id=call.message.message_id,text=f"*جاري بد الصيد الان ⚡ \n\n Username : {username} 👈 \n\n لأيقاف الصيد أضغط على Stop 👇\n\n\n المبرمج : @QQQQQQ2 *",parse_mode="markdown",reply_markup=mas)
+            time.sleep(2)
     elif call.data == "stop"+str(id):
         s.append(id)
 
