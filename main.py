@@ -49,8 +49,7 @@ def get_user():
 
 s = []
 msg = "*مرحبا بك عزيزي المستخدم ❤️🌜\n\nفي بوت صيد يوزرات أنستغرام شبه رباعية صيد ديقيق وسريع ⚡ \n\nمنفضل أضغط على Start لبدء الصيد ▶️\n\nمبرمج ألبوت : @Marko_Tools *"
-token = "5101538894:AAE8lc_9nh_vrZPmlTg24fM_H_TMReMp_ew"
-bot = telebot.TeleBot(token) 
+
 @bot.message_handler(commands=['start'])
 def boten(message):
     id = message.from_user.id
