@@ -1,4 +1,4 @@
-pyTelegramBotAPI
+pyTelegramBotAPI==3.6.7
 flask
 user_agent
 requests
