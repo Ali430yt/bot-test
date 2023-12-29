@@ -2,8 +2,7 @@ import time,os
 import logging
 import telethon
 from telethon import functions,types,events
-
-
+import asyncio
 
 id = 15307186
 hash = "c175436f6e2dfaa182b655441fefab94"
@@ -20,7 +19,6 @@ async def msgs(event):
     text = str(event.text)
     id = event.chat_id
     id_msg = event.message.id
-    print(id_msg)
     if "/add" in text:
         b = text.replace("/add ","")
         mesages.append(b)
@@ -59,12 +57,16 @@ async def msgs(event):
                     await client.send_message(peer,message=mesages[data["index"]])
                 except:
                     pass
-           did+=1
-           sleep = data["sleep"]
-           for i in range(sleep):
-               h = sleep-i
-               await client.edit_message(id,id_msg+1,f"جاري أرسال الرسائل بنجاح ✅\nعدد الرسائل المرسلة : {did}\nوقت التوقف بلثانية : {h} ⏳\nللتوقف أرسل : /stop")
-               time.sleep(1)
-
+           try:
+               did+=1
+               sleep = data["sleep"]
+               for i in range(sleep):
+                   if data["is"] == False:
+                       break
+                   h = sleep-i
+                   await client.edit_message(id,id_msg+1,f"جاري أرسال الرسائل بنجاح ✅\nعدد الرسائل المرسلة : {did}\nوقت التوقف بلثانية : {h} ⏳\nللتوقف أرسل : /stop")
+                   await asyncio.sleep(1)
+           except Exception as ee:
+               print("Time Error : ",ee)
 
 client.run_until_disconnected()
