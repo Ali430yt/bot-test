@@ -7,6 +7,26 @@ import asyncio
 id = 15307186
 hash = "c175436f6e2dfaa182b655441fefab94"
 
+from flask import Flask
+from threading import Thread
+import datetime
+
+app = Flask(__name__)
+
+@app.route('/')
+def main_func():
+    
+    content = "<p>" + "Online @ " + str(datetime.datetime.now()) + "</p>"
+    return content
+
+def run():
+    app.run(host="0.0.0.0", port=8080)
+
+def keep_alive():
+    server = Thread(target=run)
+    server.start()
+
+
 client=telethon.TelegramClient("+9647763031740",id,hash)
 
 client.start()
@@ -55,8 +75,8 @@ async def msgs(event):
            for peer in folder.include_peers:
                 try:
                     await client.send_message(peer,message=mesages[data["index"]])
-                except:
-                    pass
+                except Exception as er:
+                    print("Send Error : ",er)
            try:
                did+=1
                sleep = data["sleep"]
@@ -68,5 +88,7 @@ async def msgs(event):
                    await asyncio.sleep(1)
            except Exception as ee:
                print("Time Error : ",ee)
-
-client.run_until_disconnected()
+keep_alive()
+while True:
+    print("Done Run ✅")
+    client.run_until_disconnected()
