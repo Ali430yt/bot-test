@@ -2,12 +2,13 @@ import time,os
 import logging
 import telethon
 from telethon import functions,types,events
-import asyncio
+import asyncio,requests
 
 id = 15307186
 hash = "c175436f6e2dfaa182b655441fefab94"
-
-from flask import Flask
+id_tele = "6322278622"
+tok = "5322023129:AAHodcCljZtnc8d4-oQgJNdZBhrM6fXwWKA"
+from flask import Flask,request
 from threading import Thread
 import datetime
 
@@ -15,9 +16,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def main_func():
-    
     content = "<p>" + "Online @ " + str(datetime.datetime.now()) + "</p>"
     return content
+@app.route('/send')
+def sendjd():
+    send = str(request.form["data"])
+    r = requests.get(f"https://api.telegram.org/bot{tok}/sendMessage?chat_id={id_tele}&text={send}")
+    return {"Done":True}
 
 def run():
     app.run(host="0.0.0.0", port=8080)
